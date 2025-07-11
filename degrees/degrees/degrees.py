@@ -91,12 +91,17 @@ def shortest_path(source, target):
     
     If no possible path, returns None.
     """
+    # Initialize the start node with the source person
     startNode = Node(state=source, parent=None, action=None)
     frontier = QueueFrontier() 
     frontier.add(startNode)
-
+    # Set to keep track of explored nodes
     explored = set()
+    # If the source and target are the same, return an empty path
+    if source == target:
+        return []       
 
+    
     while not frontier.empty():
         node = frontier.remove()
 
