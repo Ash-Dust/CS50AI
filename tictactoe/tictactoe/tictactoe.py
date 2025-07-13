@@ -97,6 +97,7 @@ def terminal(board):
         if EMPTY in row:
             return False        
     return True
+    raise NotImplementedError
 
 
 def utility(board):
@@ -155,3 +156,4 @@ def minimax(board):
                 best_action = action
 
     return best_action
+    raise NotImplementedError
