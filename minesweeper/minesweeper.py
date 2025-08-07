@@ -221,25 +221,12 @@ class MinesweeperAI():
             # Mark known safes
             for safe in sentence.known_safes().copy():
                 self.mark_safe(safe)
-        #[print the mine and safe cells for debugging purposes red color]
-        # Red for mines
+        #[Print the mine and safe cells for debugging purposes red color]
         print(f"\033[91mMines: {self.mines}\033[0m")
-
-        # Remaining safe moves (not yet played)
+ 
         remaining_safes = self.safes - self.moves_made
-
-        # Print only the remaining safe moves in green
         print(f"\033[92mSafe moves left: {remaining_safes}\033[0m")
 
-
-        
-        # After marking known mines and safes, we should also check if any sentences can be simplified
-        self.knowledge = [s for s in self.knowledge if s.cells]  # Remove empty sentences
-        # This line ensures that we only keep sentences that still have cells left in them
-        # If a sentence has no cells left, it is no longer useful and can be removed
-        # Also, we can remove sentences that have a count of 0 and no cells left
-        self.knowledge = [s for s in self.knowledge if s.count > 0
-                        or (s.count == 0 and s.cells)]  
         # 5) Add any new sentences to the AI's knowledge base if they can be inferred
         # Note that any time that you make any change to your AI’s knowledge, it may be possible to draw new inferences that weren’t possible before. Be sure that those new inferences are added to the knowledge base if it is possible to do so.
         new_knowledge = []
