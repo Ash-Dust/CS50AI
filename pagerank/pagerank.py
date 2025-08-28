@@ -133,9 +133,9 @@ def iterate_pagerank(corpus, damping_factor):
             rank_sum = 0                       # Sum of PageRank contributions from all pages linking to the current page
             for potential_linker in corpus: # Check each page in the corpus to see if it links to the current page
                 if page in corpus[potential_linker]:    # If it does, add its contribution to the sum
-                    rank_sum += page_ranks[potential_linker] / len(corpus[potential_linker])               
+                    rank_sum += page_ranks[potential_linker] / len(corpus[potential_linker])      #(PR(i) / NumLinks(i))        
                 if not corpus[potential_linker]:    # If the page has no links, it contributes evenly to all pages
-                    rank_sum += page_ranks[potential_linker] / len(corpus)             
+                    rank_sum += page_ranks[potential_linker] / len(corpus)                  
             # Calculate the new PageRank value using the formula
             new_ranks[page] = (1 - damping_factor) / len(corpus) + damping_factor * rank_sum
         # Check for convergence
