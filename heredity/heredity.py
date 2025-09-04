@@ -208,10 +208,8 @@ def joint_probability(people, one_gene, two_genes, have_trait):
                 gene_prob = (1 - mother_prob) * (1 - father_prob)
         trait_prob = PROBS["trait"][num_genes][has_trait]
         joint_prob *= gene_prob * trait_prob
-
     return joint_prob
     raise NotImplementedError
-
 
 def update(probabilities, one_gene, two_genes, have_trait, p):
     """
@@ -220,16 +218,37 @@ def update(probabilities, one_gene, two_genes, have_trait, p):
     Which value for each distribution is updated depends on whether
     the person is in `have_gene` and `have_trait`, respectively.
     """
-    raise NotImplementedError
-
+    probabilities_copy = probabilities.copy()
+    for person in probabilities_copy:
+        # Update gene probabilities
+        if person in one_gene:
+            probabilities[person]["gene"][1] += p
+        elif person in two_genes:
+            probabilities[person]["gene"][2] += p
+        else:
+            probabilities[person]["gene"][0] += p
+        # Update trait probabilities
+        if person in have_trait:
+            probabilities[person]["trait"][True] += p
+        else:
+            probabilities[person]["trait"][False] += p
 
 def normalize(probabilities):
     """
     Update `probabilities` such that each probability distribution
     is normalized (i.e., sums to 1, with relative proportions the same).
     """
-    raise NotImplementedError
-
+    # Sum up the probabilities for each person 
+    # Then divide each probability by the sum to normalize
+    for person in probabilities:
+        # Normalize gene probabilities
+        gene_total = sum(probabilities[person]["gene"].values())
+        for gene in probabilities[person]["gene"]:
+            probabilities[person]["gene"][gene] /= gene_total
+        # Normalize trait probabilities
+        trait_total = sum(probabilities[person]["trait"].values())
+        for trait in probabilities[person]["trait"]:
+            probabilities[person]["trait"][trait] /= trait_total
 
 if __name__ == "__main__":
     main()
