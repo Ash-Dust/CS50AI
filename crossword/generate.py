@@ -161,6 +161,12 @@ class CrosswordCreator():
         Return True if `assignment` is complete (i.e., assigns a value to each
         crossword variable); return False otherwise.
         """
+        # check if all variables are in assignment
+        # assignment is a dictionary mapping variables objects to words
+        for var in self.crossword.variables:
+            if var not in assignment:
+                return False
+        return True
         raise NotImplementedError
 
     def consistent(self, assignment):
@@ -168,6 +174,28 @@ class CrosswordCreator():
         Return True if `assignment` is consistent (i.e., words fit in crossword
         puzzle without conflicting characters); return False otherwise.
         """
+        #The consistent function should check to see if a given assignment is consistent.
+        #An assignment is a dictionary where the keys are Variable objects and the values are strings representing the words those variables will take on. Note that the assignment may not be complete: not all variables will necessarily be present in the assignment.
+        #An assignment is consistent if it satisfies all of the constraints of the problem: that is to say, all values are distinct, every value is the correct length, and there are no conflicts between neighboring variables.
+        #The function should return True if the assignment is consistent and return False otherwise.
+        # check if all words are distinct
+        words = list(assignment.values())
+        if len(words) != len(set(words)):
+            return False
+        # check if all words are the correct length
+        for var, word in assignment.items():
+            if len(word) != var.length:
+                return False
+        # check for conflicts between neighboring variables
+        for var1 in assignment:
+            for var2 in self.crossword.neighbors(var1):
+                if var2 in assignment:
+                    overlap = self.crossword.overlaps[(var1, var2)]
+                    if overlap is not None:
+                        i, j = overlap
+                        if assignment[var1][i] != assignment[var2][j]:
+                            return False
+        return True
         raise NotImplementedError
 
     def order_domain_values(self, var, assignment):
@@ -202,7 +230,6 @@ class CrosswordCreator():
 
 
 def main():
-    '''
     # Check usage
     if len(sys.argv) not in [3, 4]:
         sys.exit("Usage: python generate.py structure words [output]")
@@ -228,4 +255,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-'''
