@@ -251,8 +251,8 @@ class CrosswordCreator():
                 if result is not None:
                     return result
         return None
-   
-
+    
+    
 
 def main():
     # Check usage
