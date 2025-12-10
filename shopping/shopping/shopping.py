@@ -68,7 +68,7 @@ def load_data(filename):
         # Skip the header
         next(reader)
         # Convert Month to index
-        Months = {"Jan": 0, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "Jun": 5,
+        Months = {"Jan": 0, "Feb": 1, "Mar": 2, "Apr": 3, "May": 4, "June": 5,
                 "Jul": 6, "Aug": 7, "Sep": 8, "Oct": 9, "Nov": 10, "Dec": 11}
         # Now, we can process each row
         for row in reader:
@@ -147,7 +147,7 @@ def evaluate(labels, predictions):
             negative_count += 1
             if predicted == 0:
                 true_negative_count += 1
-                
+
     sensitivity = true_positive_count / positive_count if positive_count else 0
     specificity = true_negative_count / negative_count if negative_count else 0
 
